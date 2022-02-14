@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class rotation : MonoBehaviour
 {
-    public float rotSpeed = 1000;
+    public float rotSpeed = 0.5;
     private float startingX;
     private float startingY;
     
@@ -30,7 +30,7 @@ public class rotation : MonoBehaviour
                 case TouchPhase.Moved:
                     float relativeX = (startingX - touch.position.x) * rotSpeed * Time.deltaTime;
                     float relativeY = (startingY - touch.position.y) * rotSpeed * Time.deltaTime;
-                    transform.Rotate(relativeX, relativeY, 0, Space.World);
+                    transform.Rotate(relativeY, relativeX, 0, Space.World);
                     break;
             }
         }
