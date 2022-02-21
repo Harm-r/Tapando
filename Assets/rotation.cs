@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class rotation : MonoBehaviour
 {
@@ -23,14 +24,14 @@ public class rotation : MonoBehaviour
             switch(touch.phase){
                 // Get starting coordinates of drag if touch just started
                 case TouchPhase.Began:
-                    rotX = touch.position.X;
-                    rotY = touch.position.Y;
+                    rotX = touch.position.x;
+                    rotY = touch.position.y;
                     break;
                 // Rotate 3D model based on finger movements
                 case TouchPhase.Moved:
-                    curX = touch.position.X;
-                    curY = touch.position.Y;
-                    transform.Rotate(Math.sign(curY - rotY) * rotSpeed, Math.sign(curX - rotX) * rotSpeed, 0, Space.World);
+                    float curX = touch.position.x;
+                    float curY = touch.position.y;
+                    transform.Rotate(Math.Sign(curY - rotY) * rotSpeed, Math.Sign(curX - rotX) * rotSpeed, 0, Space.World);
                     rotX = curX;
                     rotY = curY;
                     break;
