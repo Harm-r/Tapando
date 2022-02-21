@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class rotation : MonoBehaviour
 {
-    public float rotSpeed = 0.5;
-    private float startingX;
-    private float startingY;
+    public float rotSpeed = 0.5f;
+    private float rotX;
+    private float rotY;
     
     // Start is called before the first frame update
     void Start()
@@ -23,14 +23,16 @@ public class rotation : MonoBehaviour
             switch(touch.phase){
                 // Get starting coordinates of drag if touch just started
                 case TouchPhase.Began:
-                    startingX = touch.position.x;
-                    startingY = touch.position.y;
+                    rotX = touch.position.X;
+                    rotY = touch.position.Y;
                     break;
-                // Calculate relative coordinates and rotate 3D object based on that
+                // Rotate 3D model based on finger movements
                 case TouchPhase.Moved:
-                    float relativeX = (startingX - touch.position.x) * rotSpeed * Time.deltaTime;
-                    float relativeY = (startingY - touch.position.y) * rotSpeed * Time.deltaTime;
-                    transform.Rotate(relativeY, relativeX, 0, Space.World);
+                    curX = touch.position.X;
+                    curY = touch.position.Y;
+                    transform.Rotate(Math.sign(curY - rotY) * rotSpeed, Math.sign(curX - rotX) * rotSpeed, 0, Space.World);
+                    rotX = curX;
+                    rotY = curY;
                     break;
             }
         }
