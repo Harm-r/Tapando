@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Model.unity
     guid: 422d8d1090c93e94785f5bffc4780438
+  - enabled: 1
+    path: Assets/Scenes/TempSecond.unity
+    guid: e2ffecfb2a5901d4dbc388ce5a03bc4d
   m_configObjects: {}
