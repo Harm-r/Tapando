@@ -14,5 +14,8 @@ public class SceneChanger : MonoBehaviour
         SceneManager.LoadScene("TempSecond");
        
     }
-    
+    public void RotateUI()
+    {
+        SceneManager.LoadScene("ModelScene");
+    }
 }
