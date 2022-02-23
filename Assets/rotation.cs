@@ -31,7 +31,7 @@ public class rotation : MonoBehaviour
                 case TouchPhase.Moved:
                     float curX = touch.position.x;
                     float curY = touch.position.y;
-                    transform.Rotate(Math.Sign(curY - rotY) * rotSpeed, Math.Sign(curX - rotX) * rotSpeed, 0, Space.World);
+                    transform.Rotate(Math.Sign(curY - rotY) * rotSpeed, -Math.Sign(curX - rotX) * rotSpeed, 0, Space.World);
                     rotX = curX;
                     rotY = curY;
                     break;
