@@ -6,16 +6,19 @@ using System;
 public class zoom : MonoBehaviour{
     // Start is called before the first frame update
     public float zoomFactor = 0.1f;
-    public float zoomOutMin = 1;
-    public float zoomOutMax = 8;
+    public float minZoom = 1;
+    public float maxZoom = 8;
+    private Camera cam;
+    public bool test = true;
+    private float test_zoom;
 
     void Start(){
-
+        cam = this.gameObject.GetComponent<Camera>();
     }
 
     // Update is called once per frame
     void Update(){
-        if (Input.touchCount == 2){
+        if (Input.touchCount == 2 && !test){
             Touch fingerOne = Input.GetTouch(0);
             Touch fingerTwo = Input.GetTouch(1);
 
@@ -23,7 +26,15 @@ public class zoom : MonoBehaviour{
             float distance = (fingerOne.position - fingerTwo.position).magnitude;
             float diff = distance - prevDistance;
 
-            zoom(diff * zoomFactor);
+            perform_zoom(diff * zoomFactor);
+        }
+        // automatically zooms in and out to test limits on PC
+        // TODO: remove case before final handin
+        else if (test){
+            test_zoom = zoomFactor;
+            if (((int) Time.time) % 10 == 0) test_zoom = -test_zoom;
+            perform_zoom(test_zoom);
+            Debug.Log("Orthographic size: " + cam.orthographicSize);
         }
     }
 
@@ -31,7 +42,7 @@ public class zoom : MonoBehaviour{
         return touch.position - touch.deltaPosition;
     }
 
-    void zoom(float zoom){
-        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - zoom, zoomOutMin, zoomOutMax);
+    void perform_zoom(float zoom_diff){
+        cam.orthographicSize = Mathf.Clamp(cam.orthographicSize - zoom_diff, minZoom, maxZoom);
     }
 }
