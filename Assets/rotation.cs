@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/* ROTATION SCRIPT
+* Detects single finger drags on a touch screen.
+* Rotates a 3D model based on these single finger movements.
+*
+* To use, attach to any GameObject with a 3D model.
+*/
+
 public class rotation : MonoBehaviour
 {
     public float rotSpeed = 0.5f;
-    private float rotX;
-    private float rotY;
     
     // Start is called before the first frame update
     void Start()
@@ -18,24 +23,21 @@ public class rotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Get the touch of a finger
-        if (Input.touchCount > 0){
+        // Check if exactly one finger is touching the screen
+        if (Input.touchCount == 1){
+            // Get touch input
             Touch touch = Input.GetTouch(0);
-            switch(touch.phase){
-                // Get starting coordinates of drag if touch just started
-                case TouchPhase.Began:
-                    rotX = touch.position.x;
-                    rotY = touch.position.y;
-                    break;
-                // Rotate 3D model based on finger movements
-                case TouchPhase.Moved:
-                    float curX = touch.position.x;
-                    float curY = touch.position.y;
-                    transform.Rotate(Math.Sign(curY - rotY) * rotSpeed, -Math.Sign(curX - rotX) * rotSpeed, 0, Space.World);
-                    rotX = curX;
-                    rotY = curY;
-                    break;
-            }
+            
+            // Get difference of finger position
+            Vector2 diff = touch.deltaPosition;
+            Vector2 rotateFactor = new Vector2(diff.x, diff.y);
+            
+            rotateModel(diff * rotSpeed);
         }
+    }
+    
+    // Performs a rotation on a 3D model using the provided factors
+    void rotateModel(Vector2 rotateFactor){
+        transform.Rotate(rotateFactor.y, rotateFactor.x, 0, Space.World);
     }
 }
