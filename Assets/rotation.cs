@@ -32,7 +32,7 @@ public class rotation : MonoBehaviour
             Vector2 diff = touch.deltaPosition;
             Vector2 rotateFactor = new Vector2(diff.x, diff.y);
             
-            rotateModel(diff * rotSpeed);
+            rotateModel(rotateFactor * rotSpeed);
         }
     }
     
