@@ -18,7 +18,7 @@ public class zoom : MonoBehaviour{
     
     // variables used for testing automatic zooming
     // TODO: remove below before final handin
-    public bool test = true;
+    public bool test = false;
     private float test_zoom;
     // TODO: remove above before final handin
 
@@ -33,6 +33,7 @@ public class zoom : MonoBehaviour{
             // get touch inputs
             Touch fingerOne = Input.GetTouch(0);
             Touch fingerTwo = Input.GetTouch(1);
+            Debug.Log("finger one: " + fingerOne + " - finger two: " + fingerTwo);
 
             // get difference of distance between fingers
             float prevDistance = (getPrevPos(fingerOne) - getPrevPos(fingerTwo)).magnitude;
@@ -43,20 +44,20 @@ public class zoom : MonoBehaviour{
         }
         // automatically zooms in and out to test limits on PC
         // TODO: remove below before final handin
-        else if (test){
-            test_zoom = zoomFactor;
-            if (((int) Time.time) % 10 == 0) test_zoom = -test_zoom;
-            perform_zoom(test_zoom);
-            Debug.Log("Orthographic size: " + cam.orthographicSize);
-        }
+        //else if (test){
+        //    test_zoom = zoomFactor;
+        //    if (((int) Time.time) % 10 == 0) test_zoom = -test_zoom;
+        //    perform_zoom(test_zoom);
+        //    Debug.Log("Orthographic size: " + cam.orthographicSize);
+        //}
         // TODO: remove above before final handin
     }
 
-    Vector2 getPrevPos(Touch touch){
+    public Vector2 getPrevPos(Touch touch){
         return touch.position - touch.deltaPosition;
     }
 
-    void perform_zoom(float zoom_diff){
+    public void perform_zoom(float zoom_diff){
         cam.orthographicSize = Mathf.Clamp(cam.orthographicSize - zoom_diff, minZoom, maxZoom);
     }
 }

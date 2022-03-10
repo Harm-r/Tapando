@@ -36,8 +36,13 @@ public class rotation : MonoBehaviour
         }
     }
     
+   void perform_zoom(float v)
+    {
+        throw new NotImplementedException();
+    }
+
     // Performs a rotation on a 3D model using the provided factors
-    void rotateModel(Vector2 rotateFactor){
-        transform.Rotate(rotateFactor.y, rotateFactor.x, 0, Space.World);
+    public void rotateModel(Vector2 rotateFactor) {
+        transform.Rotate(rotateFactor.y, -rotateFactor.x, 0, Space.World);
     }
 }
