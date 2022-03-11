@@ -60,4 +60,10 @@ public class zoom : MonoBehaviour{
     public void perform_zoom(float zoom_diff){
         cam.orthographicSize = Mathf.Clamp(cam.orthographicSize - zoom_diff, minZoom, maxZoom);
     }
+
+    // needed for the test
+    public void setCamera(Camera camera)
+    {
+        this.cam = camera;
+    }
 }

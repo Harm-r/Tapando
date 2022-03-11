@@ -20,21 +20,32 @@ public class ZoomTest
     }
 
     [Test]
-    public void CameraZoomGetsBiggerWhenZoomedIn()
+    public void CameraSizeGetSmallerWhenZoomedIn()
     {
         float initialZoom = testCamera.orthographicSize;
-        zoomScript.perform_zoom(Random.Range(0, 0.5f));
+        zoomScript.setCamera(testCamera);
+        zoomScript.perform_zoom(Random.Range(0, 1f));
+
+        Assert.LessOrEqual(testCamera.orthographicSize, initialZoom);
+    }
+
+    [Test]
+    public void CameraSizeGetBiggerWhenZoomedOut()
+    {
+        float initialZoom = testCamera.orthographicSize;
+        zoomScript.setCamera(testCamera);
+        zoomScript.perform_zoom(Random.Range(0, -1f));
 
         Assert.GreaterOrEqual(testCamera.orthographicSize, initialZoom);
     }
 
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
     // `yield return null;` to skip a frame.
-    [UnityTest]
-    public IEnumerator ZoomTestWithEnumeratorPasses()
-    {
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
-        yield return null;
-    }
+    //[UnityTest]
+    //public IEnumerator ZoomTestWithEnumeratorPasses()
+    //{
+    //    // Use the Assert class to test conditions.
+    //    // Use yield to skip a frame.
+    //    yield return null;
+    //}
 }
