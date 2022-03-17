@@ -20,6 +20,6 @@ public class btn_resetcamera : MonoBehaviour
     
     void ResetCamera(){
     	cam.orthographicSize = 5;
-    	foot.Rotate(0,0,0);
+    	foot.rotation = Quaternion.identity;
     }
 }
