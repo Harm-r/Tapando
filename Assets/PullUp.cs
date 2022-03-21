@@ -9,17 +9,25 @@ public class PullUp : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 {
     public ScrollRect scrollView;
     public RectTransform panel;
-    public int top = Screen.height-200;
-    public int bottom;
+    private int top = Screen.height-150;
+    private int bottom = 0;
 
     private bool isTop = false;
 
     private bool dragging = false;
 
+
+    void Start()
+    {
+        // Set the height of the panel to the screen height + 200
+        panel.sizeDelta = new Vector2(panel.sizeDelta.x, Mathf.Max(1920,Screen.height) + 400);
+        // Allow vertical scrolling
+        scrollView.vertical = true;
+    }
+
     void FixedUpdate()
     {
-        int center = (top - bottom) / 2;
-        Debug.Log(scrollView.velocity.y);
+        int center = (this.top - this.bottom) / 2;
 
         if (!this.dragging)
         {
@@ -27,22 +35,22 @@ public class PullUp : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             {
                 if (panel.anchoredPosition.y > center * 1.5)
                 {
-                    LerpTo(top);
+                    LerpTo(this.top);
                 }
                 else
                 {
-                    LerpTo(bottom);
+                    LerpTo(this.bottom);
                 }
             }
             else
             {
                 if (panel.anchoredPosition.y < center * 0.5)
                 {
-                    LerpTo(bottom);
+                    LerpTo(this.bottom);
                 }
                 else
                 {
-                    LerpTo(top);
+                    LerpTo(this.top);
                 }
             }
         }
@@ -50,6 +58,7 @@ public class PullUp : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     void LerpTo(int position)
     {
+        
         float newY = Mathf.Lerp(panel.anchoredPosition.y, position, Time.deltaTime * 10f);
         Vector2 newPosition = new Vector2(panel.anchoredPosition.x, newY);
         
@@ -58,8 +67,23 @@ public class PullUp : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     public void OnBeginDrag(PointerEventData data)
     {
-        int center = (top - bottom) / 2;
+        //Debug.Log(data.position.y);
+        //Debug.Log(panel.anchoredPosition.y);
+        if (!(data.position.y > panel.anchoredPosition.y - 100))
+        {
+            // is there a better way to do this?
+            // Debug.Log("Je mag niet draggen!");
+            scrollView.vertical = false;
+            return;
+        }
+        else
+        {
+            scrollView.vertical = true;
+        }
+
+        int center = (this.top - this.bottom) / 2;
         this.dragging = true;
+
         if (panel.anchoredPosition.y > center)
         {
             this.isTop = true;
