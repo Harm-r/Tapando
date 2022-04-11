@@ -9,7 +9,8 @@ public class PullUp : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 {
     public ScrollRect scrollView;
     public RectTransform panel;
-    private int top = Mathf.Max(Screen.height, 1920)-150;
+    public RectTransform canvas;
+    private int top;
     private int bottom = 0;
 
     private bool isTop = false;
@@ -19,8 +20,9 @@ public class PullUp : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     void Start()
     {
-        // Set the height of the panel to the screen height + 200
-        panel.sizeDelta = new Vector2(panel.sizeDelta.x, Mathf.Max(1920,Screen.height) + 400);
+        this.top = (int)canvas.sizeDelta.y - 150; // 150 is the height of the scroll view
+        // Set the height of the panel to the screen height + 400
+        panel.sizeDelta = new Vector2(panel.sizeDelta.x, (int)canvas.sizeDelta.y + 400);
         // Allow vertical scrolling
         scrollView.vertical = true;
     }
@@ -67,14 +69,10 @@ public class PullUp : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     public void OnBeginDrag(PointerEventData data)
     {
-        //Debug.Log(data.position.y);
-        //Debug.Log(panel.anchoredPosition.y);
-        if (!(data.position.y > panel.anchoredPosition.y - 100))
+        double relativeY = data.position.y * (canvas.sizeDelta.y / Screen.height);
+
+        if (!(relativeY > panel.anchoredPosition.y - 100))
         {
-            // is there a better way to do this?
-            Debug.Log(data.position.y);
-            Debug.Log(panel.anchoredPosition.y);
-            Debug.Log("Je mag niet draggen!");
             scrollView.vertical = false;
             return;
         }
