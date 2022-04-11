@@ -19,7 +19,7 @@ public class ResetCamera : MonoBehaviour
         // Get components
         Button btn = button.GetComponent<Button>();
         cam = GameObject.Find("3dObjectCamera").GetComponent<Camera>();
-        foot = GameObject.Find("Foot_Short").GetComponent<Transform>();
+        foot = GameObject.Find("FootModel").GetComponent<Transform>();
         
         // Add listener
         // Done with lambda expression for easier testing
