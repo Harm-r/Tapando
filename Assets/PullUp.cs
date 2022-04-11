@@ -9,7 +9,7 @@ public class PullUp : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 {
     public ScrollRect scrollView;
     public RectTransform panel;
-    private int top = Screen.height-150;
+    private int top = Mathf.Max(Screen.height, 1920)-150;
     private int bottom = 0;
 
     private bool isTop = false;
@@ -72,7 +72,9 @@ public class PullUp : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         if (!(data.position.y > panel.anchoredPosition.y - 100))
         {
             // is there a better way to do this?
-            // Debug.Log("Je mag niet draggen!");
+            Debug.Log(data.position.y);
+            Debug.Log(panel.anchoredPosition.y);
+            Debug.Log("Je mag niet draggen!");
             scrollView.vertical = false;
             return;
         }

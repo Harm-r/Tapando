@@ -18,4 +18,8 @@ public class SceneChanger : MonoBehaviour
     {
         SceneManager.LoadScene("ModelScene");
     }
+    public void changeScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 }
