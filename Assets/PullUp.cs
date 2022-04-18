@@ -87,8 +87,9 @@ public class PullUp : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             scrollView.vertical = true;
         }
 
-        int center = (this.top - this.bottom) / 2;
         this.dragging = true;
+
+        int center = (this.top - this.bottom) / 2;
 
         if (panel.anchoredPosition.y > center)
         {
