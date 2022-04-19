@@ -17,6 +17,10 @@ public class SceneChanger : MonoBehaviour
         {
             transition.SetTrigger("circleOut");
             yield return new WaitForSeconds(transitionTime);
+        } else
+        {
+            transition.SetTrigger("RollInTrigger");
+            yield return new WaitForSeconds(transitionTime-0.2f);
         }
         SceneManager.LoadScene(sceneName);
        
