@@ -13,8 +13,11 @@ public class SceneChanger : MonoBehaviour
     }
     IEnumerator RotateScene(string  sceneName)
     {
-        transition.SetTrigger("circleOut");
-        yield return new WaitForSeconds(transitionTime);
+        if (sceneName == "ModelScene")
+        {
+            transition.SetTrigger("circleOut");
+            yield return new WaitForSeconds(transitionTime);
+        }
         SceneManager.LoadScene(sceneName);
        
 
