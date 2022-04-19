@@ -19,30 +19,9 @@ public class SwitchFoot : MonoBehaviour
     }
     
     void SwitchBetweenFeet(){
-    	MeshFilter mesh = footModel.GetComponent<MeshFilter>();
-    	meshName = mesh.mesh.name;
-    	Debug.Log(meshName);
-    	meshName = meshName.Substring(0, meshName.Length - 9);
-    	bool leftFoot;
-    	if (meshName.EndsWith("left")) {
-            leftFoot = true;
-            meshName = meshName.Substring(0, meshName.Length - 4);
-        }
-    	else {
-    	    leftFoot = false;
-    	    meshName = meshName.Substring(0, meshName.Length - 5);
-    	}
-    	string path = "Assets/Models/" + meshName;
-    	if (leftFoot) path += "right.fbx";
-    	else path += "left.fbx";
-    	Mesh newMesh = (Mesh)AssetDatabase.LoadAssetAtPath(path, typeof(Mesh));
-    	newMesh.RecalculateNormals();
-    	newMesh.RecalculateTangents();
-    	newMesh.RecalculateBounds();
-    	DestroyImmediate(footModel.GetComponent<MeshFilter>());
-    	MeshFilter newFilter = footModel.AddComponent<MeshFilter>();
-    	newFilter.mesh = newMesh;
-    	Debug.Log(newFilter.mesh.name);
+    	Transform transform = footModel.GetComponent<Transform>();
+        Vector3 currentScale = transform.localScale;
+        transform.localScale = new Vector3(-currentScale.x, currentScale.y, currentScale.z);
     }
 
     // Update is called once per frame
