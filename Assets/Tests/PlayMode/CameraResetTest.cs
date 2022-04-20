@@ -13,9 +13,9 @@ public class CameraResetTest
     
     [SetUp]
     public void Setup(){
-        testObject = Object.Instantiate(new GameObject());
+        testObject = new GameObject();
         testCam = testObject.AddComponent<Camera>();
-        testTransform = testObject.AddComponent<Transform>();
+        testTransform = testObject.GetComponent<Transform>();
         resetScript = testObject.AddComponent<ResetCamera>();
     }
     
