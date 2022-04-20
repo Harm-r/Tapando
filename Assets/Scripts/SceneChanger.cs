@@ -4,19 +4,28 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SceneChanger : MonoBehaviour
 {
-    public void Homescreen()
+    public Animator transition;
+    public float transitionTime =0.60f;
+    
+    public void RotateUI(string sceneName)
     {
-        SceneManager.LoadScene("Homescreen");
-       
+        StartCoroutine(RotateScene(sceneName));
     }
-    public void TempSecond()
+    IEnumerator RotateScene(string  sceneName)
     {
-        SceneManager.LoadScene("TempSecond");
+        if (sceneName == "ModelScene")
+        {
+            transition.SetTrigger("circleOut");
+            yield return new WaitForSeconds(transitionTime);
+        } else
+        {
+            transition.SetTrigger("RollInTrigger");
+            yield return new WaitForSeconds(transitionTime-0.2f);
+        }
+        SceneManager.LoadScene(sceneName);
        
-    }
-    public void RotateUI()
-    {
-        SceneManager.LoadScene("ModelScene");
+
+
     }
     public void changeScene(string sceneName)
     {
