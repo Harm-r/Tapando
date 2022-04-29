@@ -5,6 +5,7 @@ using UnityEngine;
 public class SliderScript : MonoBehaviour
 {
     public GameObject Instructions;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,11 +18,11 @@ public class SliderScript : MonoBehaviour
         
     }
 
-    public void ShowHideInstructions() {
-        Debug.Log("Test");
+    public void ShowHideInstructionsBig() {
         if (Instructions != null)
         {
             Animator animator = Instructions.GetComponent<Animator>();
+            animator.SetBool("BigOn", true);
             if (animator != null)
             {
                 bool Show = animator.GetBool("Show");
@@ -29,4 +30,19 @@ public class SliderScript : MonoBehaviour
             }
         }
     }
+
+    public void ShowHideInstructionsSmall() {
+        if (Instructions != null)
+        {
+            Animator animator = Instructions.GetComponent<Animator>();
+            animator.SetBool("BigOn", false);
+            if (animator != null)
+            {
+                bool Show = animator.GetBool("ShowSmall");
+                animator.SetBool("ShowSmall", !Show);
+            }
+        }
+    }
+
+
 }
