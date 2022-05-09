@@ -19,7 +19,7 @@ public class ScrollFoot : MonoBehaviour
         button = this.GetComponent<Button>();
         bool next = this.name.Contains("Next");
         if (next) stepSize = 1;
-        GetStepNames();
+        stepNames = GetStepNames();
         Debug.Log(stepNames.Count);
         button.onClick.AddListener(ScrollBetweenFeet);
         Debug.Log(this.gameObject);
@@ -27,7 +27,7 @@ public class ScrollFoot : MonoBehaviour
     
     void ScrollBetweenFeet(){
         // check which components will need altered visibility
-        List<string> steps = GetCurrentSteps();
+        List<string> steps = GetCurrentSteps(stepNames, footModel);
         string currentStep = "";
         if (steps.Count > 0) currentStep = steps[steps.Count - 1];
         
@@ -45,19 +45,21 @@ public class ScrollFoot : MonoBehaviour
         }
     }
     
-    void GetStepNames(){
+    public List<string> GetStepNames(){
+        List<string> steps = new List<string>();
         int children = footModel.transform.childCount;
         for (int i = 0; i < children; i++){
             GameObject obj = footModel.transform.GetChild(i).gameObject;
-            if (obj.name.Contains("Tape")) stepNames.Add(obj.name);
+            if (obj.name.Contains("Tape")) steps.Add(obj.name);
         }
-        stepNames.Sort();
+        steps.Sort();
+        return steps;
     }
     
-    List<string> GetCurrentSteps(){
+    public List<string> GetCurrentSteps(List<string> steps, GameObject foot){
         List<string> activeSteps = new List<string>();
-        foreach (string name in stepNames){
-            GameObject child = footModel.transform.Find(name).gameObject;
+        foreach (string name in steps){
+            GameObject child = foot.transform.Find(name).gameObject;
             if (child.activeSelf) activeSteps.Add(name);
         }
         activeSteps.Sort();
@@ -75,9 +77,5 @@ public class ScrollFoot : MonoBehaviour
         int tapeA = Int16.Parse(stepA.Substring(5).Split('.')[0]);
         int tapeB = Int16.Parse(stepB.Substring(5).Split('.')[0]);
         return tapeA == tapeB;
-    }
-    
-    void Update(){
-        
     }
 }
