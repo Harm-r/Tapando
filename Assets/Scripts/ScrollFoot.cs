@@ -20,9 +20,7 @@ public class ScrollFoot : MonoBehaviour
         bool next = this.name.Contains("Next");
         if (next) stepSize = 1;
         stepNames = GetStepNames();
-        Debug.Log(stepNames.Count);
         button.onClick.AddListener(ScrollBetweenFeet);
-        Debug.Log(this.gameObject);
     }
     
     void ScrollBetweenFeet(){
@@ -33,6 +31,11 @@ public class ScrollFoot : MonoBehaviour
         
         if (currentStep == "" && stepSize == 1) {
             footModel.transform.Find(stepNames[0]).gameObject.SetActive(true);
+            return;
+        }
+        
+        if (currentStep == "Tape_1.1" && stepSize == -1){
+            footModel.transform.Find("Tape_1.1").gameObject.SetActive(false);
             return;
         }
         
