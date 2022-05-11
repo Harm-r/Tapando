@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
 /* ROTATION SCRIPT
 * Detects single finger drags on a touch screen.
@@ -13,7 +14,7 @@ using System;
 public class rotation : MonoBehaviour
 {
     public float rotSpeed = 0.5f;
-    //public Collider collider;
+    public Collider collider;
     
     // Start is called before the first frame update
     void Start()
@@ -28,12 +29,18 @@ public class rotation : MonoBehaviour
         if (Input.touchCount == 1){
             // Get touch input
             Touch touch = Input.GetTouch(0);
+
+            Vector2 rotateFactor = new Vector2(0, 0);
             
             // Get difference of finger position
-            Vector2 diff = touch.deltaPosition;
-            Vector2 rotateFactor = new Vector2(diff.x, diff.y);
-            
+            if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            {
+                Vector2 diff = touch.deltaPosition;
+                rotateFactor = new Vector2(diff.x, diff.y);
+            }
+
             rotateModel(rotateFactor * rotSpeed);
+            
         }
     }
     
@@ -48,11 +55,13 @@ public class rotation : MonoBehaviour
     }
 
     //bool IsTouchOverThisObject(Touch touch) {
-    //     Ray ray = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
-    //     RaycastHit hit;
+    //    Ray ray = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
+    //    RaycastHit hit;
 
-    //     // you may need to adjust the max distance paramter here based on your
-    //     // scene size/scale.
-    //     return collider.Raycast(ray, out hit, 1000.0f); 
+    //    Debug.Log(collider.Raycast(ray, out hit, 1000.0f));
+
+    //    // you may need to adjust the max distance paramter here based on your
+    //    // scene size/scale.
+    //    return collider.Raycast(ray, out hit, 1000.0f); 
     //}
 }
