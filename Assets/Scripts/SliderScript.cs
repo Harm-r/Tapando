@@ -18,11 +18,10 @@ public class SliderScript : MonoBehaviour
         
     }
 
-    public void ShowHideInstructionsBig() {
+    public void ShowHideInstructions() {
         if (Instructions != null)
         {
             Animator animator = Instructions.GetComponent<Animator>();
-            animator.SetBool("BigOn", true);
             if (animator != null)
             {
                 bool Show = animator.GetBool("Show");
@@ -30,19 +29,4 @@ public class SliderScript : MonoBehaviour
             }
         }
     }
-
-    public void ShowHideInstructionsSmall() {
-        if (Instructions != null)
-        {
-            Animator animator = Instructions.GetComponent<Animator>();
-            animator.SetBool("BigOn", false);
-            if (animator != null)
-            {
-                bool Show = animator.GetBool("ShowSmall");
-                animator.SetBool("ShowSmall", !Show);
-            }
-        }
-    }
-
-
 }
