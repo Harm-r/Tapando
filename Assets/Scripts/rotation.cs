@@ -13,6 +13,7 @@ using System;
 public class rotation : MonoBehaviour
 {
     public float rotSpeed = 0.5f;
+    //public Collider collider;
     
     // Start is called before the first frame update
     void Start()
@@ -45,4 +46,13 @@ public class rotation : MonoBehaviour
     public void rotateModel(Vector2 rotateFactor) {
         transform.Rotate(rotateFactor.y, -rotateFactor.x, 0, Space.World);
     }
+
+    //bool IsTouchOverThisObject(Touch touch) {
+    //     Ray ray = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
+    //     RaycastHit hit;
+
+    //     // you may need to adjust the max distance paramter here based on your
+    //     // scene size/scale.
+    //     return collider.Raycast(ray, out hit, 1000.0f); 
+    //}
 }
