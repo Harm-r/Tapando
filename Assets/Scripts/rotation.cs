@@ -14,7 +14,7 @@ using UnityEngine.EventSystems;
 public class rotation : MonoBehaviour
 {
     public float rotSpeed = 0.5f;
-    public Collider collider;
+    private bool shouldRotate;
     
     // Start is called before the first frame update
     void Start()
@@ -30,21 +30,33 @@ public class rotation : MonoBehaviour
             // Get touch input
             Touch touch = Input.GetTouch(0);
 
-            Vector2 rotateFactor = new Vector2(0, 0);
-            
-            // Get difference of finger position
-            if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            // Check if the touch starts on a UI element
+            if (touch.phase == TouchPhase.Began)
             {
-                Vector2 diff = touch.deltaPosition;
-                rotateFactor = new Vector2(diff.x, diff.y);
+                if (TouchIsOnModel())
+                {
+                    shouldRotate = true;
+                } else
+                {
+                    shouldRotate = false;
+                }
             }
+            
+            Vector2 rotateFactor = new Vector2(0, 0);
 
-            rotateModel(rotateFactor * rotSpeed);
+            // Get difference of finger position
+            Vector2 diff = touch.deltaPosition;
+            rotateFactor = new Vector2(diff.x, diff.y);
+
+            if (TouchIsOnModel() && shouldRotate)
+            {
+                rotateModel(rotateFactor * rotSpeed);
+            }
             
         }
     }
     
-   void perform_zoom(float v)
+    void perform_zoom(float v)
     {
         throw new NotImplementedException();
     }
@@ -54,14 +66,25 @@ public class rotation : MonoBehaviour
         transform.Rotate(rotateFactor.y, -rotateFactor.x, 0, Space.World);
     }
 
-    //bool IsTouchOverThisObject(Touch touch) {
-    //    Ray ray = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
-    //    RaycastHit hit;
+    // Checks if the first element element hit with a raycast is the model, so no ui element 
+    public static bool TouchIsOnModel()
+    {
+        PointerEventData pointerData = new PointerEventData(EventSystem.current);
 
-    //    Debug.Log(collider.Raycast(ray, out hit, 1000.0f));
+        pointerData.position = Input.mousePosition;
 
-    //    // you may need to adjust the max distance paramter here based on your
-    //    // scene size/scale.
-    //    return collider.Raycast(ray, out hit, 1000.0f); 
-    //}
+        // make a list of all elements that are hit
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        if (results.Count > 0)
+        {
+            if (results[0].gameObject.name == "3dobject")
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
