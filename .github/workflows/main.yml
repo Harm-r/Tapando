@@ -12,6 +12,7 @@ jobs:
       matrix:
         targetPlatform:
           - Android # Build an Android .apk standalone app.
+          - iOS
     steps:
       - uses: actions/checkout@v2
         with:
@@ -22,21 +23,12 @@ jobs:
           path: Library
           key: Library-${{ matrix.targetPlatform }}
           restore-keys: Library-
-    
-      - uses: game-ci/unity-test-runner@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        with:
-         projectPath: ./
-         githubToken: ${{ secrets.GITHUB_TOKEN }}
      
       - uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
-     
-      
              
       - uses: actions/upload-artifact@v2
         with:
