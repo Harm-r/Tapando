@@ -34,27 +34,41 @@ public class ScrollFoot : MonoBehaviour
         string currentStep = "";
         if (steps.Count > 0) currentStep = steps[steps.Count - 1];
         
+        string nextStep = "";
         // if there are no tapes active and user wants the next tape, activate the first tape
         if (currentStep == "" && stepSize == 1) {
-            footModel.transform.Find(stepNames[0]).gameObject.SetActive(true);
-            return;
+            nextStep = "Tape_1.1";
         }
-        
         // if the user want to go from the first taping step to the initial foot, deactivate the first tape
-        if (currentStep == "Tape_1.1" && stepSize == -1){
-            footModel.transform.Find("Tape_1.1").gameObject.SetActive(false);
-            return;
+        else if (currentStep == "Tape_1.1" && stepSize == -1){
+            nextStep = "Tape_0";
+        }
+            // get the next step according to the direction the user wants to step
+        else{
+            nextStep = stepNames[GetIndexFromStep(currentStep) + stepSize];
         }
         
-        // get the next step according to the direction the user wants to step
-        string nextStep = stepNames[GetIndexFromStep(currentStep) + stepSize];
+        SelectStep(nextStep);
+    }
+    
+    // function that activates the right part of the tape of nextStep and the final part of all tapes before nextStep
+    public void SelectStep(string nextStep){
+        // deactivate all currently active tapes
+        foreach(string step in stepNames){
+            footModel.transform.Find(step).gameObject.SetActive(false);
+        }
         
-        // activate the next step
+        // if next step has no tapes, return immediately
+        if (nextStep == "Tape_0") return;
+        
+        // activate tape for nextStep
         footModel.transform.Find(nextStep).gameObject.SetActive(true);
         
-        // check if the current step should remain active or be deactivated
-        if (isSameTape(currentStep, nextStep) || (!isSameTape(currentStep, nextStep) && stepSize == -1)){
-            footModel.transform.Find(currentStep).gameObject.SetActive(false);
+        Debug.Log(GetPreviousTapes(nextStep, stepNames));
+        
+        // activate final step of all previous tapes
+        foreach(string step in GetPreviousTapes(nextStep, stepNames)){
+            footModel.transform.Find(step).gameObject.SetActive(true);
         }
     }
     
@@ -89,6 +103,22 @@ public class ScrollFoot : MonoBehaviour
         return activeSteps;
     }
     
+    // function that returns the final step for each tape before currentStep
+    public List<string> GetPreviousTapes(string currentStep, List<string> steps){
+        // get current tape number
+        int currentTape = GetTape(currentStep);
+        
+        List<string> finalSteps = new List<string>();
+        
+        // if steps[i] belongs to different tape than steps[i-1], then add steps[i-1] to finalSteps
+        for(int i = 1; i < steps.Count; i++){
+            Debug.Log("got here");
+            if (steps[i-1] == currentStep) break;
+            if (!IsSameTape(steps[i], steps[i-1])) finalSteps.Add(steps[i-1]);
+        }
+        return finalSteps;
+    }
+    
     // function that returns the index of a specific taping step in the stepNames, or -1 if the taping step is not in the list
     int GetIndexFromStep(string stepName){
         for (int i = 0; i < stepNames.Count; i++){
@@ -97,8 +127,12 @@ public class ScrollFoot : MonoBehaviour
         return -1;
     }
     
+    int GetTape(string step){
+        return Int16.Parse(step.Substring(5).Split('.')[0]);
+    }
+    
     // function that returns true if the stepA belongs to the same piece of tape as stepB
-    bool isSameTape(string stepA, string stepB){
+    bool IsSameTape(string stepA, string stepB){
         int tapeA = Int16.Parse(stepA.Substring(5).Split('.')[0]);
         int tapeB = Int16.Parse(stepB.Substring(5).Split('.')[0]);
         return tapeA == tapeB;
