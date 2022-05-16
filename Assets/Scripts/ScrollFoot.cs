@@ -48,11 +48,13 @@ public class ScrollFoot : MonoBehaviour
             nextStep = stepNames[GetIndexFromStep(currentStep) + stepSize];
         }
         
-        SelectStep(nextStep);
+        SelectStep(nextStep, this.footModel);
     }
     
     // function that activates the right part of the tape of nextStep and the final part of all tapes before nextStep
-    public void SelectStep(string nextStep){
+    public void SelectStep(string nextStep, GameObject footModel){
+        if (stepNames == null) stepNames = GetStepNames();
+        
         // deactivate all currently active tapes
         foreach(string step in stepNames){
             footModel.transform.Find(step).gameObject.SetActive(false);
@@ -63,8 +65,6 @@ public class ScrollFoot : MonoBehaviour
         
         // activate tape for nextStep
         footModel.transform.Find(nextStep).gameObject.SetActive(true);
-        
-        Debug.Log(GetPreviousTapes(nextStep, stepNames));
         
         // activate final step of all previous tapes
         foreach(string step in GetPreviousTapes(nextStep, stepNames)){
@@ -112,7 +112,6 @@ public class ScrollFoot : MonoBehaviour
         
         // if steps[i] belongs to different tape than steps[i-1], then add steps[i-1] to finalSteps
         for(int i = 1; i < steps.Count; i++){
-            Debug.Log("got here");
             if (steps[i-1] == currentStep) break;
             if (!IsSameTape(steps[i], steps[i-1])) finalSteps.Add(steps[i-1]);
         }
