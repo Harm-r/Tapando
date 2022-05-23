@@ -27,7 +27,8 @@ public class ResetCamera : MonoBehaviour
     }
     
     public void CameraReset(Camera cam, Transform foot){
-    	cam.orthographicSize = 5;
-    	foot.rotation = Quaternion.identity;
+    	cam.orthographicSize = 10;
+        foot.rotation = Quaternion.Euler(new Vector3(0,90,0));
+        
     }
 }
