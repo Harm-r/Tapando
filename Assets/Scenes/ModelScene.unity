@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43083236, g: 0.46708143, b: 0.5038312, a: 1}
+  m_IndirectSpecularColor: {r: 0.43336824, g: 0.4700244, b: 0.505865, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -587,8 +587,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1451922837}
   m_HandleRect: {fileID: 1451922836}
   m_Direction: 2
-  m_Value: 0.99998236
-  m_Size: 0.38805154
+  m_Value: 0.99998313
+  m_Size: 0.37809694
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1618,8 +1618,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 401.75, y: 0}
-  m_SizeDelta: {x: 803.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 803.5, y: 924}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &423805430
 MonoBehaviour:
@@ -1628,7 +1628,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423805428}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
@@ -1691,13 +1691,13 @@ MonoBehaviour:
   m_Text: 'Start by rounding out the corners of the tape and finding the approximate
     length to be used for the first few steps
 
-    You can find the approximate
-    length by following the steps without removing the adhesive substance on the
-    bottom and seeing how much
+    You can find the approximate length
+    by following the steps without removing the adhesive substance on the bottom
+    and seeing how much
 
-    tape is necessary. When taping make sure to
-    stretch it slightly when pressing it against the skin, as just letting fall on
-    the skin will offer little support.'
+    tape is necessary. When taping make sure to stretch
+    it slightly when pressing it against the skin, as just letting fall on the skin
+    will offer little support.'
 --- !u!222 &423805433
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2702,8 +2702,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1343487505}
   m_HandleRect: {fileID: 1343487504}
   m_Direction: 0
-  m_Value: 0.00000062220835
-  m_Size: 0.26862416
+  m_Value: 0.0000018666259
+  m_Size: 0.25598365
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3064,7 +3064,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.05, y: 0}
   m_AnchorMax: {x: 0.95, y: 0.05}
-  m_AnchoredPosition: {x: 0, y: 587.99475}
+  m_AnchoredPosition: {x: 0, y: 587.9947}
   m_SizeDelta: {x: 0, y: 1035.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &860861135
@@ -3373,7 +3373,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.00001144409, y: -90.20999}
+  m_AnchoredPosition: {x: -0.00001144409, y: -90.20996}
   m_SizeDelta: {x: 959, y: 541.93}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &914126275
@@ -4185,7 +4185,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 169.22}
+  m_AnchoredPosition: {x: 0, y: 169.21997}
   m_SizeDelta: {x: 0, y: 338.45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1108376437
