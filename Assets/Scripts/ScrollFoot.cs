@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/** SCROLL FOOT SCRIPT
+*   Script that contains the functionality of the buttons that scroll left and right
+*   between different steps in the taping process.
+*   The most important function is SelectStep, which is also used in the SliderScript.
+*   To use, attach to the buttons. If the button is named "Next", the button will move
+*   the taping steps forward, otherwise it will move the steps backwards.
+*/
 public class ScrollFoot : MonoBehaviour
 {
     private Button button;
