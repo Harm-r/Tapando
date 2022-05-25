@@ -13,7 +13,7 @@ public class SceneChanger : MonoBehaviour
     }
     IEnumerator RotateScene(string  sceneName)
     {
-        if (sceneName == "ModelScene")
+        if (sceneName == "InjurySelection")
         {
             transition.SetTrigger("circleOut");
             yield return new WaitForSeconds(transitionTime);
