@@ -9,9 +9,9 @@ public class PullUp : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 {
     public ScrollRect scrollView;
     public RectTransform panel;
-    private RectTransform panelView; 
+    private RectTransform panelView;
     public RectTransform canvas;
-
+    public RectTransform filler;
 
     private int top;
     private int bottom = 0;
@@ -23,7 +23,7 @@ public class PullUp : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     void Start()
     {
-        this.top = (int)canvas.sizeDelta.y - 150; // 150 is the height of the scroll view
+        this.top = (int)(canvas.rect.height - filler.GetComponent<LayoutElement>().minHeight - scrollView.GetComponent<RectTransform>().rect.height);
         this.panelView = panel.Find("PullUpView").GetComponent<RectTransform>();
         // Set the height of the panel to the screen height + 400
         panel.sizeDelta = new Vector2(panel.sizeDelta.x, canvas.sizeDelta.y + 400);

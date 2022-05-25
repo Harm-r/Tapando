@@ -16,7 +16,7 @@ public class ResetCamera : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        // Get components
+        // get components needed for script to work
         Button btn = button.GetComponent<Button>();
         cam = GameObject.Find("3dObjectCamera").GetComponent<Camera>();
         foot = GameObject.Find("FootModel").GetComponent<Transform>();
@@ -26,6 +26,7 @@ public class ResetCamera : MonoBehaviour
         btn.onClick.AddListener(() => CameraReset(cam, foot));
     }
     
+    // function that is called to update the camera
     public void CameraReset(Camera cam, Transform foot){
     	cam.orthographicSize = 5;
     	foot.rotation = Quaternion.identity;
