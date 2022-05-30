@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class SceneChanger : MonoBehaviour
 {
     public Animator transition;
-    public float transitionTime =0.60f;
+    public float transitionTime =0.70f;
     
     public void RotateUI(string sceneName)
     {
@@ -20,7 +20,7 @@ public class SceneChanger : MonoBehaviour
         } else
         {
             transition.SetTrigger("RollInTrigger");
-            yield return new WaitForSeconds(transitionTime-0.2f);
+            yield return new WaitForSeconds(transitionTime);
         }
         SceneManager.LoadScene(sceneName);
        
