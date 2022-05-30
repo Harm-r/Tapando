@@ -159,8 +159,9 @@ public class ScrollFoot : MonoBehaviour
 
     // function that fills the dictionary of instructions, based on an input file within the project
     void FillInstructions(){
-        string path = "Assets/Text/Instructions.txt";
-        StreamReader Reader = new StreamReader(path);
+        TextAsset instructionsFile = Resources.Load<TextAsset>("Instructions.txt");
+
+        StreamReader Reader = new StreamReader(Application.dataPath + "/Resources/Instructions.txt");
 
         // manually add the first instruction, because stepNames does not contain Tape_0
         Instructions.Add("Tape_0", Reader.ReadLine());

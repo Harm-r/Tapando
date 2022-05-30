@@ -47,6 +47,7 @@ public class ResetCamera : MonoBehaviour
         }
 
         //Rotate the foot to the position found on the current tape step
+       
         Vector3 transformVector = foot.transform.Find(currentStep).gameObject.GetComponent<CameraPosition>().GivePosition();
         footTransform.rotation = Quaternion.Euler(transformVector);
         
