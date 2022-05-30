@@ -2092,7 +2092,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 873498522}
         m_TargetAssemblyTypeName: SceneChanger, ScriptAssembly
-        m_MethodName: changeScene
+        m_MethodName: ChangeScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
