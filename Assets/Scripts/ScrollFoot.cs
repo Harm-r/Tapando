@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,15 +18,18 @@ public class ScrollFoot : MonoBehaviour
     private int stepSize = -1;
     private GameObject footModel;
     private List<string> stepNames = new List<string>();
+    private Dictionary<string, string> Instructions = new Dictionary<string, string>();
+    private Text InstructionsText;
     
     
     // Start is called before the first frame update
     void Start()
     {
-        // initialise variables
+        // initialise variable
         footModel = GameObject.Find("FootModel");
         button = this.GetComponent<Button>();
-        
+        InstructionsText = GameObject.Find("InstructionsText").GetComponent<Text>();
+
         // check if this is next or previous button
         bool next = this.name.Contains("Next");
         if (next) stepSize = 1;
@@ -58,21 +62,30 @@ public class ScrollFoot : MonoBehaviour
         SelectStep(nextStep, this.footModel);
     }
     
-    // function that activates the right part of the tape of nextStep and the final part of all tapes before nextStep
+    // function that activates the right part of the tape and instructions of nextStep and the final part of all tapes before nextStep
     public void SelectStep(string nextStep, GameObject footModel){
         if (stepNames == null) stepNames = GetStepNames();
+        if (Instructions.Count == 0) FillInstructions();
+
         
         // deactivate all currently active tapes
         foreach(string step in stepNames){
             footModel.transform.Find(step).gameObject.SetActive(false);
         }
-        
+
+        // activate current instruction text
+        string instruction = "";
+        bool Bool = Instructions.TryGetValue(nextStep, out instruction);
+        if(Bool){
+            InstructionsText.text = instruction;
+        }
+
         // if next step has no tapes, return immediately
         if (nextStep == "Tape_0") return;
         
         // activate tape for nextStep
         footModel.transform.Find(nextStep).gameObject.SetActive(true);
-        
+
         // activate final step of all previous tapes
         foreach(string step in GetPreviousTapes(nextStep, stepNames)){
             footModel.transform.Find(step).gameObject.SetActive(true);
@@ -83,7 +96,7 @@ public class ScrollFoot : MonoBehaviour
     public List<string> GetStepNames(){
         List<string> steps = new List<string>();
         int children = footModel.transform.childCount;
-        
+
         // add all children containing the word "Tape" in the name to the list
         for (int i = 0; i < children; i++){
             GameObject obj = footModel.transform.GetChild(i).gameObject;
@@ -142,5 +155,20 @@ public class ScrollFoot : MonoBehaviour
         int tapeA = Int16.Parse(stepA.Substring(5).Split('.')[0]);
         int tapeB = Int16.Parse(stepB.Substring(5).Split('.')[0]);
         return tapeA == tapeB;
+    }
+
+    // function that fills the dictionary of instructions, based on an input file within the project
+    void FillInstructions(){
+        string path = "Assets/Text/Instructions.txt";
+        StreamReader Reader = new StreamReader(path);
+
+        // manually add the first instruction, because stepNames does not contain Tape_0
+        Instructions.Add("Tape_0", Reader.ReadLine());
+
+        for (int i = 0; i < stepNames.Count; i++){
+            Instructions.Add(stepNames[i], Reader.ReadLine());
+        }
+
+        Reader.Close();
     }
 }

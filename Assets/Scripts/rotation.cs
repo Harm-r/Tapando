@@ -42,7 +42,7 @@ public class rotation : MonoBehaviour
             rotateFactor = new Vector2(diff.x, diff.y);
 
             // rotate model if right conditions are met
-            if (TouchIsOnModel() && shouldRotate) {
+            if (shouldRotate) {
                 rotateModel(rotateFactor * rotSpeed);
             }
             
