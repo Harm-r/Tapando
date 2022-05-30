@@ -15,7 +15,9 @@ public class rotation : MonoBehaviour
 {
     public float rotSpeed = 0.5f;
     private bool shouldRotate;
-    
+    private bool secondFrame;
+    private bool horizantal;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,33 +28,62 @@ public class rotation : MonoBehaviour
     void Update()
     {
         // Check if exactly one finger is touching the screen
-        if (Input.touchCount == 1){
+        if (Input.touchCount == 1)
+        {
             // Get touch input
             Touch touch = Input.GetTouch(0);
-
-            // Check if the touch starts on a UI element
-            if (touch.phase == TouchPhase.Began)
+           //check what touch phase the touch is in
+            switch (touch.phase)
             {
-                if (TouchIsOnModel())
-                {
-                    shouldRotate = true;
-                } else
-                {
-                    shouldRotate = false;
-                }
+                //if this is the first frame of the touch we check whether the touch is on the model and let the next iteration of the function know it is the second frame
+                case TouchPhase.Began:
+                    secondFrame = true;
+                    if (TouchIsOnModel())
+                    {
+                        shouldRotate = true;
+                    }
+                    else
+                    {
+                        shouldRotate = false;
+                    }
+                    break;
+               
+                case TouchPhase.Moved:
+                    Vector2 diff = touch.deltaPosition;
+                    //if it is the first frame of movement(secondFram = true) we check which axis the object needs to turn on
+                    if (secondFrame == true)
+                    {
+                        secondFrame = false;
+                        if (Math.Abs(diff.x) > Math.Abs(diff.y))
+                            {
+                                horizantal = true;
+                            } else
+                            {
+                                horizantal = false;
+                            }
+                    }
+                    // rotate the object on the axis found
+                    Vector2 rotateFactor = new Vector2(0,0);
+                    if (shouldRotate)
+                    {
+                        if (horizantal)
+                        {
+                            rotateFactor.Set(diff.x, 0);
+                            rotateModel(rotateFactor * rotSpeed);
+                        }
+                        else
+                        {
+                            rotateFactor.Set(0, diff.y);
+                            rotateModel(rotateFactor * rotSpeed);
+                        }
+                    }
+                   
+                    break;
+                case TouchPhase.Ended:
+                    break;
             }
-            
-            Vector2 rotateFactor = new Vector2(0, 0);
 
-            // Get difference of finger position
-            Vector2 diff = touch.deltaPosition;
-            rotateFactor = new Vector2(diff.x, diff.y);
 
-            if (TouchIsOnModel() && shouldRotate)
-            {
-                rotateModel(rotateFactor * rotSpeed);
-            }
-            
         }
     }
     
