@@ -16,7 +16,7 @@ public class rotation : MonoBehaviour
     public float rotSpeed = 0.5f;
     private bool shouldRotate;
     private bool secondFrame;
-    private bool horizantal;
+    private bool horizontal;
 
     // Start is called before the first frame update
     void Start()
@@ -56,25 +56,25 @@ public class rotation : MonoBehaviour
                         secondFrame = false;
                         if (Math.Abs(diff.x) > Math.Abs(diff.y))
                             {
-                                horizantal = true;
+                                horizontal = true;
                             } else
                             {
-                                horizantal = false;
+                                horizontal = false;
                             }
                     }
                     // rotate the object on the axis found
                     Vector2 rotateFactor = new Vector2(0,0);
                     if (shouldRotate)
                     {
-                        if (horizantal)
+                        if (horizontal)
                         {
                             rotateFactor.Set(diff.x, 0);
-                            rotateModel(rotateFactor * rotSpeed);
+                            rotateModel(rotateFactor * rotSpeed,horizontal);
                         }
                         else
                         {
                             rotateFactor.Set(0, diff.y);
-                            rotateModel(rotateFactor * rotSpeed);
+                            rotateModel(rotateFactor * rotSpeed,horizontal);
                         }
                     }
                    
@@ -93,8 +93,15 @@ public class rotation : MonoBehaviour
     }
 
     // Performs a rotation on a 3D model using the provided factors
-    public void rotateModel(Vector2 rotateFactor) {
-        transform.Rotate(rotateFactor.y, -rotateFactor.x, 0, Space.World);
+    public void rotateModel(Vector2 rotateFactor, bool horizontal) {
+        if (horizontal)
+        {
+            transform.Rotate(rotateFactor.y, -rotateFactor.x, 0, Space.Self);
+        } else
+        {
+            transform.Rotate(rotateFactor.y, -rotateFactor.x, 0, Space.World);
+        }
+       
     }
 
     // Checks if the first element element hit with a raycast is the model, so no ui element 

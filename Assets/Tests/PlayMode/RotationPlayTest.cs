@@ -35,7 +35,7 @@ public class RotationPlayTest
 
         // rotate the test object randomly
         Vector2 rotateFactor = new Vector2(Random.Range(0, 0.5f), Random.Range(0, 0.5f));
-        rotateScript.rotateModel(rotateFactor); 
+        rotateScript.rotateModel(rotateFactor, true); 
 
         Assert.AreNotEqual(initialRotation, testObject.transform.rotation.eulerAngles);
     }
