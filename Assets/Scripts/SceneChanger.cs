@@ -12,24 +12,23 @@ using UnityEngine.SceneManagement;
 public class SceneChanger : MonoBehaviour
 {
     public Animator transition;
-    public float transitionTime = 0.60f;
+    public float transitionTime =0.70f;
     
     // function that is invoked when the button is clicked on. initiates scene transition
     public void ChangeSceneWithAnimation(string sceneName){
         StartCoroutine(RotateScene(sceneName));
     }
-
-    // function that handles animations and scene transitions
-    IEnumerator RotateScene(string sceneName){
-        // use specific animation on scene transition to ModelScene
-        if (sceneName == "ModelScene") {
+    IEnumerator RotateScene(string  sceneName)
+    {
+        if (sceneName == "InjurySelection")
+        {
             transition.SetTrigger("circleOut");
             yield return new WaitForSeconds(transitionTime);
         } 
         // otherwise use default animation
         else {
             transition.SetTrigger("RollInTrigger");
-            yield return new WaitForSeconds(transitionTime-0.2f);
+            yield return new WaitForSeconds(transitionTime);
         }
         // load scene when animation has finished playing
         SceneManager.LoadScene(sceneName);

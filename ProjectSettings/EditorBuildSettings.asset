@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SettingScreen.unity
     guid: d3f2294269ffda046bb4a5e72d9b84fd
+  - enabled: 1
+    path: Assets/Scenes/InjurySelection.unity
+    guid: 84b0ef6ec088da84a889cfc2dbd3119c
   m_configObjects: {}
