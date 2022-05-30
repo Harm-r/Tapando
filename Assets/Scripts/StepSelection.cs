@@ -20,15 +20,15 @@ public class StepSelection : MonoBehaviour
         // get the foot model and script
         footModel = GameObject.Find("FootModel");
         scrollFoot = FindObjectOfType<ScrollFoot>();
-	ResetCamera resetCamera = FindObjectOfType<ResetCamera>();
-	Camera cam = GameObject.Find("3dObjectCamera").GetComponent<Camera>();
+	    ResetCamera resetCamera = FindObjectOfType<ResetCamera>();
+	    Camera cam = GameObject.Find("3dObjectCamera").GetComponent<Camera>();
         // add onClick listener to each button. Assumes exactly enough empty buttons have been created
         foreach (Transform child in transform){
             Button btn = child.gameObject.GetComponent<Button>();
             btn.onClick.AddListener(delegate{
-		scrollFoot.SelectStep(child.gameObject.name, footModel); 
-		resetCamera.CameraReset(cam, footModel.transform);
-	    });
+		        scrollFoot.SelectStep(child.gameObject.name, footModel); 
+		        resetCamera.CameraReset(cam, footModel);
+	        });
         }
     }
 }
