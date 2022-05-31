@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -66,7 +67,6 @@ public class ScrollFoot : MonoBehaviour
     public void SelectStep(string nextStep, GameObject footModel){
         if (stepNames == null) stepNames = GetStepNames();
         if (Instructions.Count == 0) FillInstructions();
-
         
         // deactivate all currently active tapes
         foreach(string step in stepNames){
@@ -159,17 +159,35 @@ public class ScrollFoot : MonoBehaviour
 
     // function that fills the dictionary of instructions, based on an input file within the project
     void FillInstructions(){
-        TextAsset instructionsFile = Resources.Load<TextAsset>("Instructions.txt");
+        TextAsset instructionsFile = Resources.Load("Instructions") as TextAsset;
+        Debug.Log(instructionsFile.text);
 
-        StreamReader Reader = new StreamReader(Application.dataPath + "/Resources/Instructions.txt");
+        String instructionsString = instructionsFile.text;
+        String[] instructionsLines = Regex.Split ( instructionsString, "\n|\r|\r\n" );
 
-        // manually add the first instruction, because stepNames does not contain Tape_0
-        Instructions.Add("Tape_0", Reader.ReadLine());
+        Debug.Log(instructionsLines.Length);
 
-        for (int i = 0; i < stepNames.Count; i++){
-            Instructions.Add(stepNames[i], Reader.ReadLine());
+        for(int i = 0; i < stepNames.Count; i++)
+        {
+            Instructions.Add(stepNames[i], instructionsLines[i]);
         }
 
-        Reader.Close();
+
+
+
+
+
+
+        //StreamReader Reader = new StreamReader(Application.dataPath + "/Resources/Instructions.txt");
+
+        //// manually add the first instruction, because stepNames does not contain Tape_0
+        //Instructions.Add("Tape_0", Reader.ReadLine());
+
+        //for (int i = 0; i < stepNames.Count; i++)
+        //{
+        //    Instructions.Add(stepNames[i], Reader.ReadLine());
+        //}
+
+        //Reader.Close();
     }
 }
