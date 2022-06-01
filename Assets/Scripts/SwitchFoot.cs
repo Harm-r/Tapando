@@ -29,6 +29,8 @@ public class SwitchFoot : MonoBehaviour
     	Transform transform = footModel.GetComponent<Transform>();
         Vector3 currentScale = transform.localScale;
         transform.localScale = new Vector3(-currentScale.x, currentScale.y, currentScale.z);
+
+        // Change the letter in the button
         if(currentScale.x > 0f){
             textField.text = "R";
         } else{
