@@ -13,6 +13,7 @@ public class StepSelection : MonoBehaviour
 {
     private ScrollFoot scrollFoot;
     private GameObject footModel;
+    private List<string> stepNames;
     
     // Start is called before the first frame update
     void Start()
@@ -30,5 +31,25 @@ public class StepSelection : MonoBehaviour
 		        resetCamera.CameraReset(cam, footModel);
 	        });
         }
+
+        // get step names for update function
+        stepNames = scrollFoot.GetStepNames(footModel);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+	// find out the current step
+	List<string> currentSteps = scrollFoot.GetCurrentSteps(stepNames, footModel);
+        if (currentSteps.Count == 0) currentSteps.Add("Tape_0");
+        string currentStep = currentSteps[currentSteps.Count - 1];
+        foreach (Transform child in transform){
+	    if (child.name == currentStep){
+		child.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            }
+	    else{
+		child.localScale = new Vector3(0.85f, 0.85f, 0.85f);
+            }
+        }   
     }
 }

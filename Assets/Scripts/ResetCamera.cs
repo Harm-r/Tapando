@@ -34,7 +34,7 @@ public class ResetCamera : MonoBehaviour
         string currentStep = "";
 
         //get all the steps currently in view, if none currentstep is the empty foot
-        List<string> stepsTaken = m_scrollfoot.GetCurrentSteps(m_scrollfoot.GetStepNames(), foot);
+        List<string> stepsTaken = m_scrollfoot.GetCurrentSteps(m_scrollfoot.GetStepNames(foot), foot);
         if (stepsTaken.Count != 0)
         {
               currentStep = stepsTaken.Last();

@@ -36,7 +36,7 @@ public class ScrollFoot : MonoBehaviour
         if (next) stepSize = 1;
         
         // get step names
-        stepNames = GetStepNames();
+        stepNames = GetStepNames(footModel);
         button.onClick.AddListener(ScrollBetweenFeet);
     }
     
@@ -65,7 +65,7 @@ public class ScrollFoot : MonoBehaviour
     
     // function that activates the right part of the tape and instructions of nextStep and the final part of all tapes before nextStep
     public void SelectStep(string nextStep, GameObject footModel){
-        if (stepNames == null) stepNames = GetStepNames();
+        if (stepNames == null) stepNames = GetStepNames(footModel);
         if (Instructions.Count == 0) FillInstructions();
         
         // deactivate all currently active tapes
@@ -93,13 +93,13 @@ public class ScrollFoot : MonoBehaviour
     }
     
     // function that returns all tapes contained in the foot model, with the format "Tape_x.y"
-    public List<string> GetStepNames(){
+    public List<string> GetStepNames(GameObject foot){
         List<string> steps = new List<string>();
-        int children = footModel.transform.childCount;
+        int children = foot.transform.childCount;
 
         // add all children containing the word "Tape" in the name to the list
         for (int i = 0; i < children; i++){
-            GameObject obj = footModel.transform.GetChild(i).gameObject;
+            GameObject obj = foot.transform.GetChild(i).gameObject;
             if (obj.name.Contains("Tape")) steps.Add(obj.name);
         }
         

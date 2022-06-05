@@ -17,7 +17,7 @@ public class ScrollFootVisibility : MonoBehaviour
         // initialise variables for update function
         scrollFoot = FindObjectOfType<ScrollFoot>();
         footModel = GameObject.Find("FootModel");
-        stepNames = scrollFoot.GetStepNames();
+        stepNames = scrollFoot.GetStepNames(footModel);
     }
 
     // Update is called once per frame
