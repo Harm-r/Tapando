@@ -66,9 +66,15 @@ public class StepSelection : MonoBehaviour
 	if (currentStep != prevStep){
             // set button object of current step in view
 	    float scroll = stepButton.anchoredPosition.x/scrollRect.content.rect.width;
-	    if (currentStep == "Tape_0") scrollRect.horizontalScrollbar.value = 0;
-	    if (currentStep == stepNames[stepNames.Count - 1]) scrollRect.horizontalScrollbar.value = 1;
-	    scrollRect.horizontalScrollbar.value = scroll;
+	    if (currentStep == "Tape_0"){
+	        scrollRect.horizontalScrollbar.value = 0;
+	    }
+	    else if (currentStep == stepNames[stepNames.Count - 1]){
+                scrollRect.horizontalScrollbar.value = 1;
+            }
+	    else {
+		scrollRect.horizontalScrollbar.value = scroll;
+	    }
 	    prevStep = currentStep;
         }
     }
