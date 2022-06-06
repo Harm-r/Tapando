@@ -14,6 +14,8 @@ public class StepSelection : MonoBehaviour
     private ScrollFoot scrollFoot;
     private GameObject footModel;
     private List<string> stepNames;
+    private ScrollRect scrollRect;
+    private string prevStep = "Tape_0";
     
     // Start is called before the first frame update
     void Start()
@@ -34,6 +36,9 @@ public class StepSelection : MonoBehaviour
 
         // get step names for update function
         stepNames = scrollFoot.GetStepNames(footModel);
+
+        // find ScrollRect component of carousel
+        scrollRect = GameObject.Find("Carousel").GetComponent<ScrollRect>();
     }
 
     // Update is called once per frame
@@ -43,13 +48,28 @@ public class StepSelection : MonoBehaviour
 	List<string> currentSteps = scrollFoot.GetCurrentSteps(stepNames, footModel);
         if (currentSteps.Count == 0) currentSteps.Add("Tape_0");
         string currentStep = currentSteps[currentSteps.Count - 1];
+	
+	// button object that needs to be in view
+	RectTransform stepButton = new RectTransform();
+
+	// make button that is of current step slightly larger
         foreach (Transform child in transform){
 	    if (child.name == currentStep){
 		child.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+		stepButton = child.gameObject.GetComponent<RectTransform>();
             }
 	    else{
 		child.localScale = new Vector3(0.85f, 0.85f, 0.85f);
             }
-        }   
+        } 
+
+	if (currentStep != prevStep){
+            // set button object of current step in view
+	    float scroll = stepButton.anchoredPosition.x/scrollRect.content.rect.width;
+	    if (currentStep == "Tape_0") scrollRect.horizontalScrollbar.value = 0;
+	    if (currentStep == stepNames[stepNames.Count - 1]) scrollRect.horizontalScrollbar.value = 1;
+	    scrollRect.horizontalScrollbar.value = scroll;
+	    prevStep = currentStep;
+        }
     }
 }
